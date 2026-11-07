@@ -1,0 +1,73 @@
+{
+ "seed": 7189,
+ "predictions": {
+  "ml_f1": {
+   "text": "F1 ~80-90%, precision cao hơn vì ham chiếm phần lớn, chỉ số b sẽ mang dấu âm lớn để tránh đoán sai lớp đa số. Ngược lại nó cũng sẽ dễ bỏ sót tin nhắn spam khiến recall thấp hơn.",
+   "time": "11:23:48"
+  },
+  "ml_lr": {
+   "text": "lr=0.001 thì loss giảm cực kỳ chậm và chưa thể hội tụ sau 300 epoch, lr=50 thì bước nhảy quá lớn khiến bước nhảy bị dao động mạnh hoặc bùng nổ không thể giảm",
+   "time": "11:24:06"
+  },
+  "dl_curve": {
+   "text": "(1)val loss sẽ không giảm mãi mà sẽ tăng ngược trở lại vì overfitting, khi bộ dữ liệu được sử dụng SMS Spam Collection chỉ có khoảng hơn 5000 mẫu, trong khi MLP có 128129 tham số, sẽ khiến học vẹt.(2)F1 sẽ xấp xỉ Logistic Regression vì dữ liệu 2000 từ đã được bóc tách riêng lẻ từ đầu, MLP mạnh ở trích xuất ngữ cảnh từ dữ liệu liên tục, ở đây nó đã bị hạn chế.",
+   "time": "13:37:30"
+  },
+  "dl_relu": {
+   "text": "Linear chỉ là phép nhân trọng số, ReLU biến số âm thành 0, giữ nguyên dương, tạo tính phi tuyến tính cho mạng nơ ron, nếu bỏ nó, mạng 2 lớp sẽ thành mô hình logitstic regression ở phần 1. F1 sẽ không cải thiện do mất khả năng học các tổ hợp phi tuyến tính.",
+   "time": "13:57:19"
+  }
+ },
+ "checks": {
+  "1.1 vectorize": true,
+  "1.2 sigmoid / predict_proba": true,
+  "1.3 train_logreg": true,
+  "1.4 metrics": true,
+  "2.1 build_mlp": true,
+  "2.2 train_mlp": true
+ },
+ "experiments": [
+  {
+   "key": "ml_f1",
+   "time": "11:23:50"
+  },
+  {
+   "key": "ml_lr",
+   "time": "11:24:08"
+  },
+  {
+   "key": "dl_curve",
+   "time": "13:37:35"
+  },
+  {
+   "key": "dl_relu",
+   "time": "13:57:21"
+  }
+ ],
+ "results": {
+  "1. BoW + LogReg (tự code)": {
+   "accuracy": 0.9612903225806452,
+   "precision": 1.0,
+   "recall": 0.7058823529411765,
+   "f1": 0.8275862068965517,
+   "f1_SUB": 0.8571428571428571,
+   "train_s": 3.4888725330000057,
+   "msg_per_s": 45001.34626614411,
+   "p50_ms": 0.05960850003816631,
+   "p95_ms": 0.0964209499983325,
+   "usd_per_1k": 0.0
+  },
+  "2. BoW + MLP (deep learning)": {
+   "accuracy": 0.9716129032258064,
+   "precision": 0.9878048780487805,
+   "recall": 0.7941176470588235,
+   "f1": 0.8804347826086957,
+   "f1_SUB": 0.9473684210526316,
+   "train_s": 6.578966400998979,
+   "msg_per_s": 37310.45985609271,
+   "p50_ms": 0.21683849990949966,
+   "p95_ms": 0.28910604905831855,
+   "usd_per_1k": 0.0
+  }
+ }
+}
